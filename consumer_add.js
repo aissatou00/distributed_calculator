@@ -16,7 +16,7 @@ async function startWorker() {
         const { n1, n2, op } = JSON.parse(msg.content.toString());
         if (op === 'add') {
             const result = n1 + n2;
-            console.log(` Performing addition: ${n1} + ${n2} = ${result}`);
+          //  console.log(` Performing addition: ${n1} + ${n2} = ${result}`);
 
             const delay = Math.floor(Math.random() * 10000) + 5000;
             setTimeout(() => {
