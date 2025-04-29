@@ -24,22 +24,22 @@ services:
     build: .
     depends_on:
       - rabbitmq
-    command: node worker_add.js
+    command: node consumer_add.js
 
   worker_sub:
     build: .
     depends_on:
       - rabbitmq
-    command: node worker_sub.js
+    command: node consumer_sub.js
 
   worker_mul:
     build: .
     depends_on:
       - rabbitmq
-    command: node worker_mul.js
+    command: node consumer_mul.js
 
   worker_div:
     build: .
     depends_on:
       - rabbitmq
-    command: node worker_div.js
+    command: node consumer_div.js
