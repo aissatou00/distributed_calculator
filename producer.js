@@ -3,7 +3,7 @@ const amqp = require('amqplib');
 const operations = ['add', 'sub', 'mul', 'div', 'all'];
 
 async function produce() {
-    const conn = await amqp.connect('amqp://rabbitmq');
+    const conn = await amqp.connect('amqp://localhost');
     const ch = await conn.createChannel();
     const queue = 'calc_requests';
 
