@@ -23,6 +23,7 @@ async function startWorker() {
             const result = n1 * n2;
 
             const delay = Math.floor(Math.random() * 10000) + 5000;
+
             setTimeout(() => {
                 const resultMsg = JSON.stringify({
                     n1, n2, op, result
@@ -31,6 +32,7 @@ async function startWorker() {
                 console.log(`  Sent result: ${resultMsg}`);
             }, delay);
         }
+        channel.ack(msg);
         channel.ack(msg);
     });
 }

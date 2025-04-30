@@ -15,14 +15,15 @@ async function startWorker() {
     
     await channel.assertQueue(resultQueue, { durable: false });
 
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
+    console.log(" [*] Div Worker waiting for messages. To exit press CTRL+C");
 
     channel.consume(queue, async (msg) => {
         const { n1, n2, op } = JSON.parse(msg.content.toString());
         if (op === 'div') {
-            const result = n1 / n2;
-
+            const result = n2 !== 0 ? n1 / n2 : 'Error: division by zero';
+           
             const delay = Math.floor(Math.random() * 10000) + 5000;
+
             setTimeout(() => {
                 const resultMsg = JSON.stringify({
                     n1, n2, op, result
@@ -31,6 +32,7 @@ async function startWorker() {
                 console.log(`  Sent result: ${resultMsg}`);
             }, delay);
         }
+        channel.ack(msg);
         channel.ack(msg);
     });
 }
