@@ -14,7 +14,8 @@ Ce projet simule un système de calcul distribué avec RabbitMQ, dans le but d�
 ##  Arborescence du projet
 
 distributed_calculator/
-├── public/          
+├── public/ 
+    ├──index.html    
 ├── consumer_add.js          
 ├── consumer_sub.js          
 ├── consumer_mul.js          
