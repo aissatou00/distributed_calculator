@@ -39,25 +39,31 @@ Password: guest
 
 ## Exécution des composants
 - Lancer les consommateurs :
+```bash
 node consumer_add.js
 node consumer_sub.js
 node consumer_mul.js
 node consumer_div.js
+```
 
 ## Lancer les producteurs
 - Producteur avant amélioration : 
 node producer.js (producer à 5ms)
 
 - Producteur après amélioration : 
-node producer_3000ms.js (Il envoie aléatoirement des opérations add, sub, mul et div toutes les 2-3 secondes.)
-node producer_all.js (Il envoie aléatoirement des opérations add, sub, mul, div, ou all toutes les 2-3 secondes.)
-
+```bash
+node consumer_add.js
+node consumer_sub.js
+node consumer_mul.js
+node consumer_div.js
+```
 ## Lancer les consommateurs et le producer dans des terminaux différents 
-node consumer_all.js add
-node consumer_all.js div
-node consumer_all.js mul
-node consumer_all.js sub
-node producer_all.js 
+```bash
+node consumer_add.js
+node consumer_sub.js
+node consumer_mul.js
+node consumer_div.js
+```
 
 
 ## Lancer le consommateur all (affiche les résultats)
