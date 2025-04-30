@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/app
     command: >
-      sh -c "node server.js & node consumer_web.js"
+      sh -c "node server.js"
 
   worker_add:
     build: .
