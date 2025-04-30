@@ -2,17 +2,17 @@ const amqp = require('amqplib');
 
 async function startWorker() {
     const conn = await amqp.connect('amqp://localhost'); 
-    const ch = await conn.createChannel();
+    const channel = await conn.createChannel();
 
     const queue = 'calc_requests';
-    await ch.assertQueue(queue, { durable: false });
-
     const resultQueue = 'calc_results';
-    await ch.assertQueue(resultQueue, { durable: false });
 
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
+    await channel.assertQueue(queue, { durable: false });
+    await channel.assertQueue(resultQueue, { durable: false });
 
-    ch.consume(queue, async (msg) => {
+    console.log("Press CTRL+C to exit", queue);
+
+    channel.consume(queue, async (msg) => {
         const { n1, n2, op } = JSON.parse(msg.content.toString());
         if (op === 'add') {
             const result = n1 + n2;
@@ -23,11 +23,11 @@ async function startWorker() {
                 const resultMsg = JSON.stringify({
                     n1, n2, op, result
                 });
-                ch.sendToQueue(resultQueue, Buffer.from(resultMsg));
+                channel.sendToQueue(resultQueue, Buffer.from(resultMsg));
                 console.log(`  Sent result: ${resultMsg}`);
             }, delay);
         }
-        ch.ack(msg);
+        channel.ack(msg);
     });
 }
 
