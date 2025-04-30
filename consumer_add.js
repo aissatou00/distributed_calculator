@@ -24,7 +24,7 @@ async function startWorker() {
                     n1, n2, op, result
                 });
                 channel.sendToQueue(resultQueue, Buffer.from(resultMsg));
-                console.log(`  Sent result: ${resultMsg}`);
+                console.log(`  message envoyé: ${resultMsg}`);
             }, delay);
         }
         channel.ack(msg);

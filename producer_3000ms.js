@@ -16,7 +16,7 @@ async function produce() {
 
         const message = JSON.stringify({ n1, n2, op });
         channel.sendToQueue(queue, Buffer.from(message));
-        console.log(` [x] Sent: ${message}`);
+        console.log(` message envoyé: ${message}`);
 
         const nextDelay = Math.floor(Math.random() * 1000) + 2000; 
         setTimeout(sendMessage, nextDelay);

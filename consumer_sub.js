@@ -10,7 +10,7 @@ async function startWorker() {
     await channel.assertQueue(requestQueue, { durable: false });
     await channel.assertQueue(resultQueue, { durable: false });
 
-    console.log(" [*] Sub Worker waiting for messages. To exit press CTRL+C");
+    console.log(" Sub Worker waiting for messages. To exit press CTRL+C");
 
     channel.consume(requestQueue, async (msg) => {
         const { n1, n2, op } = JSON.parse(msg.content.toString());
@@ -21,7 +21,7 @@ async function startWorker() {
             setTimeout(() => {
                 const resultMsg = JSON.stringify({ n1, n2, op, result });
                 channel.sendToQueue(resultQueue, Buffer.from(resultMsg));
-                console.log(` [-] Sub result sent: ${resultMsg}`);
+                console.log(`  Sub message reçu: ${resultMsg}`);
             }, delay);
         }
         channel.ack(msg);

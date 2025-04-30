@@ -16,7 +16,7 @@ async function produce() {
 
         const msg = JSON.stringify({ n1, n2, op });
         ch.sendToQueue(queue, Buffer.from(msg));
-        console.log(` [x] Sent: ${msg}`);
+        console.log(` message envoyé: ${msg}`);
     }, 5000);
 }
 

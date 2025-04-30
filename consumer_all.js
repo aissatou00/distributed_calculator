@@ -7,7 +7,7 @@ const OPERATIONS = {
     div: (a, b) => b === 0 ? null : a / b
 };
 
-const operation = process.argv[2]; // récupère 'add', 'sub', etc.
+const operation = process.argv[2]; 
 
 if (!OPERATIONS[operation]) {
     console.error("Usage: node worker.js [add|sub|mul|div]");
@@ -24,7 +24,7 @@ async function startWorker() {
     await channel.assertQueue(requestQueue, { durable: false });
     await channel.assertQueue(resultQueue, { durable: false });
 
-    console.log(` [*] ${operation.toUpperCase()} worker waiting for messages...`);
+    console.log(` ${operation.toUpperCase()} worker waiting for messages...`);
 
     channel.consume(requestQueue, async (msg) => {
         const { n1, n2, op } = JSON.parse(msg.content.toString());
@@ -33,13 +33,14 @@ async function startWorker() {
         if (op === operation || op === 'all') {
             const result = OPERATIONS[operation](n1, n2);
 
-            const delay = Math.floor(Math.random() * 10000) + 5000; // 5–15 sec
+            const delay = Math.floor(Math.random() * 10000) + 5000;
+             
             setTimeout(() => {
                 const resultMsg = JSON.stringify({
                     n1, n2, op: operation, result
                 });
                 channel.sendToQueue(resultQueue, Buffer.from(resultMsg));
-                console.log(` [x] Sent result: ${resultMsg}`);
+                console.log(` message reçu: ${resultMsg}`);
             }, delay);
         }
 
