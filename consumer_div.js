@@ -8,7 +8,7 @@ let channel;
 async function startWorker() {
     const conn = await amqp.connect('amqp://localhost'); 
     channel= await conn.createChannel();
-
+    channel.prefetch(5);
     await channel.assertExchange(exchange, 'direct', { durable: false });
 
     await channel.assertQueue(queue, { durable: false });
