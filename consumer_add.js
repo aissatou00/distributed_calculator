@@ -12,7 +12,7 @@ async function startWorker() {
     await channel.assertExchange(exchange, 'direct', { durable: false });
 
     await channel.assertQueue(queue, { durable: false });
-    
+
     await channel.assertQueue(resultQueue, { durable: false });
 
     console.log("Press CTRL+C to exit", queue);
@@ -21,7 +21,6 @@ async function startWorker() {
         const { n1, n2, op } = JSON.parse(msg.content.toString());
         if (op === 'add') {
             const result = n1 + n2;
-          //  console.log(` Performing addition: ${n1} + ${n2} = ${result}`);
 
             const delay = Math.floor(Math.random() * 10000) + 5000;
             setTimeout(() => {
