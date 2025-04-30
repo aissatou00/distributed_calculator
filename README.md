@@ -34,15 +34,19 @@ distributed_calculator/
 
 
 ## Installation des dépendances
+```bash
 git clone https://github.com/aissatou00/distributed_calculator.git
 cd distributed_calculator
 npm install
 npm install amqplib
 docker-compose up --build
+```
 
 ## Démarrage de RabbitMQ (via Docker)
 - Pour ce projet, nous utilisons l'image Docker officielle avec l'interface de gestion :
+```bash
 docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
 - L'interface de gestion RabbitMQ est accessible sur : http://localhost:15672
 User: guest
 Password: guest
