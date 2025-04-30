@@ -6,7 +6,7 @@ const exchange = 'calc_exchange';
 let channel;
 
 async function startWorker() {
-    const conn = await amqp.connect('amqp://localhost'); 
+    const conn = await amqp.connect('amqp://localhost');
     channel= await conn.createChannel();
 
     await channel.assertExchange(exchange, 'direct', { durable: false });
