@@ -3,6 +3,14 @@
 ##  Objectif
 Ce projet simule un système de calcul distribué avec RabbitMQ, dans le but d’évaluer la capacité de traitement parallèle d' opérations mathématiques complexes (addition, soustraction, multiplication, division).
 
+##  Choix Techniques
+- Node.js : pour les scripts backend (workers, producteurs)
+- Express.js : pour l’interface web
+- Docker & Docker Compose : pour la conteneurisation et l'orchestration
+- RabbitMQ : pour la gestion de la communication entre les producteurs et les workers via un système de message
+
+
+
 ##  Arborescence du projet
 
 distributed_calculator/
@@ -26,13 +34,15 @@ distributed_calculator/
 
 
 ## Installation des dépendances
+git clone https://github.com/aissatou00/distributed_calculator.git
+cd distributed_calculator
 npm install
 npm install amqplib
-
+docker-compose up --build
 
 ## Démarrage de RabbitMQ (via Docker)
 - Pour ce projet, nous utilisons l'image Docker officielle avec l'interface de gestion :
-docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 - L'interface de gestion RabbitMQ est accessible sur : http://localhost:15672
 User: guest
 Password: guest
@@ -50,21 +60,19 @@ node consumer_div.js
 - Producteur avant amélioration : 
 node producer.js (producer à 5ms)
 
-- Producteur après amélioration : 
+- Producteur après amélioration :
 ```bash
-node consumer_add.js
-node consumer_sub.js
-node consumer_mul.js
-node consumer_div.js
+node producer_3000ms.js   # Envoie aléatoirement des opérations add, sub, mul et div toutes les 2-3 secondes.
+node producer_all.js      # Envoie aléatoirement des opérations add, sub, mul, div ou all toutes les 2-3 secondes.
 ```
 ## Lancer les consommateurs et le producer dans des terminaux différents 
 ```bash
-node consumer_add.js
-node consumer_sub.js
-node consumer_mul.js
-node consumer_div.js
+node consumer_all.js add
+node consumer_all.js div
+node consumer_all.js mul
+node consumer_all.js sub
+node producer_all.js 
 ```
-
 
 ## Lancer le consommateur all (affiche les résultats)
 node consumer_all.js
