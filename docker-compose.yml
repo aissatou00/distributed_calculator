@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  app:
+    build: .
+    container_name: calc_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/app
+    command: >
+      sh -c "node server.js & node consumer_web.js"
+
+  worker_add:
+    build: .
+    depends_on:
+      - rabbitmq
+    command: node consumer_add.js
+
+  worker_sub:
+    build: .
+    depends_on:
+      - rabbitmq
+    command: node consumer_sub.js
+
+  worker_mul:
+    build: .
+    depends_on:
+      - rabbitmq
+    command: node consumer_mul.js
+
+  worker_div:
+    build: .
+    depends_on:
+      - rabbitmq
+    command: node consumer_div.js
