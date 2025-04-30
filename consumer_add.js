@@ -1,13 +1,18 @@
 const amqp = require('amqplib');
 
+const queue = 'calc_requests';
+const resultQueue = 'calc_results';
+const exchange = 'calc_exchange';
+let channel;
+
 async function startWorker() {
     const conn = await amqp.connect('amqp://localhost'); 
-    const channel = await conn.createChannel();
+    channel = await conn.createChannel();
 
-    const queue = 'calc_requests';
-    const resultQueue = 'calc_results';
+    await channel.assertExchange(exchange, 'direct', { durable: false });
 
     await channel.assertQueue(queue, { durable: false });
+    
     await channel.assertQueue(resultQueue, { durable: false });
 
     console.log("Press CTRL+C to exit", queue);
